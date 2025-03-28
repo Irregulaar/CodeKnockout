@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import Editor from "@monaco-editor/react";
-import { loadPyodide } from "pyodide";
 import "../../styles/global.css";
 
 function PY() {
@@ -11,12 +10,13 @@ function PY() {
   useEffect(() => {
     async function initPyodide() {
       try {
-        const py = await loadPyodide();
+        const py = await loadPyodide({
+          indexURL: "https://cdn.jsdelivr.net/pyodide/v0.27.4/full/",
+        });
         console.log("Pyodide cargado correctamente.");
         setPyodide(py);
       } catch (error) {
         console.error("Error cargando Pyodide:", error);
-        setOutput("Error cargando Pyodide. Revisa la consola.");
       }
     }
     initPyodide();
