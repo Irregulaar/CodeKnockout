@@ -1,15 +1,17 @@
 import bcrypt
 
-
-
-def verify_password(password:str, hashed_password:str):
+def hash_password(password: str) -> str:
     """
-    Transforma ambas contraseñas en formato de bytes
+    Genera un hash seguro de la contraseña.
+    """
+    salt = bcrypt.gensalt()  # Genera un salt aleatorio
+    hashed_password = bcrypt.hashpw(password.encode(), salt)  # Hashea la contraseña
+    return hashed_password.decode()  # Devuelve el hash en formato de string
+
+def verify_password(password: str, hashed_password: str) -> bool:
+    """
+    Verifica si una contraseña coincide con su hash.
     """
     password_bytes = password.encode()
-    hashed_bytes = hashed_password.encode() 
-    #Se valida si los bytes coinciden
-    is_valid = bcrypt.checkpw(password_bytes,hashed_bytes)
-    return is_valid
-
-
+    hashed_bytes = hashed_password.encode()
+    return bcrypt.checkpw(password_bytes, hashed_bytes)
