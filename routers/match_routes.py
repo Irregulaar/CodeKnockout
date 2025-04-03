@@ -1,6 +1,8 @@
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect, APIRouter
 from starlette.websockets import WebSocketState
 from database.auth import get_user_data
+from database.match_database import SaveIdGame
+import uuid
 from utils.jwt import get_jwt_data
 import logging
 
@@ -29,7 +31,10 @@ async def mensaje_confirmacion():
         }
         
         # Enviar el mensaje como un objeto JSON con "msg" como clave principal
-        mensaje = {"msg": mensaje_dict if jugadores_conectados else "No hay jugadores conectados"}
+        uuid_str = str(uuid.uuid4())
+        mensaje_dict["game_id"] = uuid_str
+        SaveIdGame(uuid_str, list(mensaje_dict.keys())[0], list(mensaje_dict.keys())[1], "pendiente")
+        mensaje = {"start": mensaje_dict if jugadores_conectados else "No hay jugadores conectados"}
 
         # Enviar el mensaje a cada WebSocket conectado
         for ws in list(wait_list["participants"].keys()):
@@ -74,27 +79,30 @@ async def mover_jugadores_a_partida():
             await partida_encontrada()
             await notificar_en_cola()
 
-@router.websocket("/ws/{user}")
-async def websocket_endpoint(websocket: WebSocket, user: str):
-    decode_data = get_jwt_data(user)  # Aquí 'user' es el JWT
-    user_data = get_user_data(decode_data["user"])
-    
+@router.websocket("/ws/{token}")
+async def websocket_endpoint(websocket: WebSocket, token: str):
+    # Decodificar el token JWT
+    decode_data = get_jwt_data(token)  # Cambiado de 'user' a 'token'
+    user_data = get_user_data(decode_data["user"])  # Asegúrate de que 'user' sea el campo correcto
+
     if not user_data:
         await websocket.close(code=1008, reason="Usuario no encontrado")
         return
-    
-    id = user_data["username"]
+
+    # Obtener el username y avatar_url del usuario
+    id = user_data["username"]  # Cambiado de 'user_id' a 'username' si hiciste este cambio
     url_avatar = user_data["avatar_url"]
 
     await websocket.accept()
-    
+
+    # Manejo de la lista de espera y participantes
     if len(wait_list["participants"]) >= 2:
         wait_list["queue"][websocket] = {"user_id": id, "listo": False, "avatar_url": url_avatar}
         await websocket.send_text("La partida ya está completa, espera la siguiente ronda.")
     else:
         if len(wait_list["queue"]) >= 2 and len(wait_list["participants"]) == 0:
             await mover_jugadores_a_partida()
-        
+
         agregar_websocket(websocket, id, url_avatar)
         if len(wait_list["participants"]) == 2:
             await partida_encontrada()
@@ -102,14 +110,14 @@ async def websocket_endpoint(websocket: WebSocket, user: str):
     try:
         while True:
             mensaje = await websocket.receive_text()
-            
+
             if mensaje == "confirmar" and websocket in wait_list["participants"]:
                 wait_list["participants"][websocket]["listo"] = True
                 await websocket.send_json({"msg": "Has confirmado, esperando a otros jugadores"})
-                
+
                 # Verificar si todos están listos
                 todos_listos = all(datos["listo"] for datos in wait_list["participants"].values())
-                
+
                 if todos_listos:
                     game_id = f"game{len(active_games) + 1}"
                     active_games[game_id] = {
@@ -123,7 +131,7 @@ async def websocket_endpoint(websocket: WebSocket, user: str):
                 await websocket.send_json({"msg": "Estás en la cola y listo, esperando partida"})
             else:
                 await websocket.send_text("Comando no reconocido o no estás en una partida activa")
-                
+
     except WebSocketDisconnect:
         if websocket in wait_list["participants"]:
             wait_list["participants"].pop(websocket, None)
