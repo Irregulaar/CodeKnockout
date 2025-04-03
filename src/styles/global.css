@@ -4,6 +4,7 @@
 :root {
   --color-regular: #2e2c42;
   --color-dark: #1d1c2a;
+  --color-moredark: #151424;
   --color-light: #52506f;
   --color-extralight: #9d97cb;
   --text-regular: #f1f1f1;
@@ -60,6 +61,10 @@ body {
 
   .bg-dark {
     background-color: var(--color-dark);
+  }
+
+  .bg-moredark {
+    background-color: var(--color-moredark);
   }
 
   .bg-light {
