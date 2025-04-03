@@ -16,7 +16,7 @@ function DashboardHeader() {
 
         {openModal && (
           <div
-            className="bg-dark absolute z-10 flex h-fit w-25 -translate-x-16 translate-y-1 flex-col items-start rounded p-1
+            className="bg-moredark absolute z-10 flex h-fit w-25 -translate-x-16 translate-y-1 flex-col items-start rounded p-1
               text-[12px] text-white"
           >
             <div className="hover:bg-light flex w-full flex-row items-center justify-start gap-2 p-2 transition-all duration-300">
