@@ -1,0 +1,115 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+@import "tailwindcss";
+
+:root {
+  --color-regular: #2e2c42;
+  --color-dark: #1d1c2a;
+  --color-light: #52506f;
+  --color-extralight: #9d97cb;
+  --text-regular: #f1f1f1;
+  --text-dark: #c1c1c1;
+}
+
+/* Firefox (uncomment to work in Firefox, although other properties will not work!)  */
+/** {
+  scrollbar-width: thin;
+  scrollbar-color: #9D97CB #2E2C42;
+}*/
+
+/* Chrome, Edge and Safari */
+*::-webkit-scrollbar {
+  height: 10px;
+  width: 10px;
+}
+*::-webkit-scrollbar-track {
+  border-radius: 5px;
+  background-color: #2e2c42;
+}
+
+*::-webkit-scrollbar-track:hover {
+  background-color: #2e2c42;
+}
+
+*::-webkit-scrollbar-track:active {
+  background-color: #2e2c42;
+}
+
+*::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  background-color: #9d97cb;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background-color: #9d97cb;
+}
+
+*::-webkit-scrollbar-thumb:active {
+  background-color: #9d97cb;
+}
+
+body {
+  font-family: "Poppins", system-ui, sans-serif;
+  background-color: var(--color-regular);
+}
+
+@layer utilities {
+  /* Background colors */
+  .bg-regular {
+    background-color: var(--color-regular);
+  }
+
+  .bg-dark {
+    background-color: var(--color-dark);
+  }
+
+  .bg-light {
+    background-color: var(--color-light);
+  }
+
+  .bg-extralight {
+    background-color: var(--color-extralight);
+  }
+
+  /* Hover background colors */
+  .hover\:bg-regular:hover {
+    background-color: var(--color-regular);
+  }
+
+  .hover\:bg-dark:hover {
+    background-color: var(--color-dark);
+  }
+
+  .hover\:bg-light:hover {
+    background-color: var(--color-light);
+  }
+
+  .hover\:bg-extralight:hover {
+    background-color: var(--color-extralight);
+  }
+
+  /* Text colors */
+  .text-regular {
+    color: var(--text-regular);
+  }
+
+  .text-dark {
+    color: var(--text-dark);
+  }
+
+  /* Border colors */
+  .border-regular {
+    border-color: var(--color-regular);
+  }
+
+  .border-dark {
+    border-color: var(--color-dark);
+  }
+
+  .border-light {
+    border-color: var(--color-light);
+  }
+
+  .border-extralight {
+    border-color: var(--color-extralight);
+  }
+}
