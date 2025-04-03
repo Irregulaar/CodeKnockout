@@ -1,6 +1,6 @@
-
+import asyncio
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect, APIRouter
-from database.match_database import SaveIdGame,CheckIdGame,Checkplayer
+from database.match_database import SaveIdGame,CheckIdGame,playerwinner_database
 import json
 
 
@@ -20,13 +20,17 @@ class game_status:
             self.games[ID]["players"].append(Player)
             self.games[ID]["sockets"].append(websocket)
 
-        if len(self.games[ID]["players"]) == 2:
-            print(f"Juego iniciado con los jugadores {self.games[ID]["players"]}")
+        # if len(self.games[ID]["players"]) == 2:
+        #     print(f"Juego iniciado con los jugadores {self.games[ID]["players"]}")
     
     def show(self):
        print(self.games)
 
     async def remove_player(self,Game_id, Player,websocket):
+
+           if Game_id in self.games:
+               return
+           
 
            if Player in self.games[Game_id]["players"]:
               #se borra de players y sockets
@@ -41,9 +45,37 @@ class game_status:
                 winner_data = {
                  "winner": f"{winner}"}
                 try:
+                    playerwinner_database(winner,game_id=Game_id)
                     await winner_socket.send_text(json.dumps(winner_data))
+
+                    for ws in self.games[Game_id]["sockets"]:
+                        await ws.close(code=1000, reason="Partida finalizada")    
+
+                    del self.games[Game_id]
+                    
                 except Exception as e:
                     print(f"Error al enviar el ganador")
+
+    async def winner_metodo(self,Game_id,Player):
+        sockets = self.games[Game_id]["sockets"]
+        
+        if Player in self.games[Game_id]["players"]: 
+            for ws in sockets:
+                try:
+                    await ws.send_text(json.dumps({"winner": Player}))
+                except Exception as e:
+                    print(f"Error al enviar el ganador: {e}")
+                
+            await asyncio.sleep(5)  
+
+            for ws in sockets:
+                try:
+                    await ws.close(code=1000, reason="Partida finalizada")
+                except Exception as e:
+                    print(f"Error al cerrar WebSocket: {e}")
+            del self.games[Game_id]
+
+            
 
 game = game_status()
 
@@ -53,7 +85,10 @@ async def websocket_game(websocket:WebSocket,game_id:str):
     await websocket.accept()
 
     if CheckIdGame(game_id):
-        print("ID juego encontrado")
+        print("Encontrado")
+    else:
+        await websocket.close(code=1008, reason="ID de juego no válido")
+        return
 
 
     try:
@@ -69,7 +104,11 @@ async def websocket_game(websocket:WebSocket,game_id:str):
            game.added_players(game_id,player_id,websocket)
            
            if player_winner:
-               print("SI HAY UN PLAYER WINNER")
+               print("Ganador encontrado")
+               await game.winner_metodo(game_id,player_winner)
+               playerwinner_database(player_winner,game_id)
+
+               
            
            game.show()
 
