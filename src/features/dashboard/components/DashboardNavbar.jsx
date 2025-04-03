@@ -10,8 +10,8 @@ function DashboardNavbar() {
 
   return (
     <div
-      className={`group bg-dark flex h-full w-15 flex-col items-center text-white transition-all hover:w-55
-        ${openModal && "w-90"}`}
+      className={`group bg-dark fixed md:absolute z-10 flex h-screen w-15 flex-col items-center text-white transition-all
+        hover:w-55 ${openModal && "w-[50%]"}`}
     >
       <div
         onClick={() => setOpenModal(!openModal)}
@@ -32,6 +32,7 @@ function DashboardNavbar() {
       <div className="block h-px w-[100%] bg-white opacity-10 md:hidden"></div>
 
       <a
+        href="/dashboard"
         className={`${openModal && "grid-cols-[auto_auto] place-items-start"} hover:bg-light grid w-full grid-cols-1
           place-content-start place-items-center items-center p-2 group-hover:grid-cols-[auto_auto] group-hover:place-items-start
           cursor-pointer`}
