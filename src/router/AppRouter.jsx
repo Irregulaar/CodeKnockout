@@ -8,6 +8,7 @@ import DashboardHome from "../features/dashboard/pages/DashboardHome";
 import DashboardDuel from "../features/dashboard/pages/DashboardDuel";
 import DashboardPractice from "../features/dashboard/pages/DashboardPractice";
 import DuelCombat from "../features/duels/pages/duelCombat";
+import Settings from "../features/settings/pages/settingsHome";
 // Import other pages as needed
 
 function AppRouter() {
@@ -23,6 +24,7 @@ function AppRouter() {
         <Route path="/duel" element={<DashboardDuel />} />
         <Route path="/practice" element={<DashboardPractice />} />
         <Route path="/combat" element={<DuelCombat />} />
+        <Route path="/settings" element={<Settings />} />
 
         {/* Add more routes as needed */}
         {/* <Route path="/about" element={<AboutPage />} /> */}
