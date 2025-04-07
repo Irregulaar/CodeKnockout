@@ -10,7 +10,7 @@ function DashboardNavbar() {
 
   return (
     <div
-      className={`group bg-dark fixed md:absolute z-10 flex h-screen w-15 flex-col items-center text-white transition-all
+      className={`group bg-dark fixed md:absolute z-10 flex h-screen w-13 flex-col items-center text-white transition-all
         hover:w-55 ${openModal && "w-[50%]"}`}
     >
       <div
