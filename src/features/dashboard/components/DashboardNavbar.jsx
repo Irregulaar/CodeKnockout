@@ -4,14 +4,15 @@ import { MdLeaderboard } from "react-icons/md";
 import { FaHome } from "react-icons/fa";
 import { useState } from "react";
 import { AiOutlineMenuUnfold } from "react-icons/ai";
+import { LuSwords } from "react-icons/lu";
 
 function DashboardNavbar() {
   const [openModal, setOpenModal] = useState(false);
 
   return (
     <div
-      className={`group bg-dark fixed md:absolute z-10 flex h-screen w-13 flex-col items-center text-white transition-all
-        hover:w-55 ${openModal && "w-[50%]"}`}
+      className={`group bg-dark fixed z-10 flex h-screen w-13 flex-col items-center text-white transition-all hover:w-55
+        ${openModal && "w-[50%]"}`}
     >
       <div
         onClick={() => setOpenModal(!openModal)}
@@ -37,7 +38,7 @@ function DashboardNavbar() {
           place-content-start place-items-center items-center p-2 group-hover:grid-cols-[auto_auto] group-hover:place-items-start
           cursor-pointer`}
       >
-        <FaHome size={40} className={`${openModal && "row-span-2"} rounded-full p-2 transition-all group-hover:row-span-2`} />
+        <FaHome size={40} className={`${openModal && "row-span-2"} p-2 transition-all group-hover:row-span-2`} />
         <p
           className={`${openModal ? "block ml-2" : "hidden"} col-start-2 text-[12px] font-bold group-hover:ml-2 group-hover:block`}
         >
@@ -54,7 +55,7 @@ function DashboardNavbar() {
           place-content-start place-items-center items-center p-2 group-hover:grid-cols-[auto_auto] group-hover:place-items-start
           cursor-pointer`}
       >
-        <FaCode size={40} className={`${openModal && "row-span-2"} rounded-full p-2 transition-all group-hover:row-span-2`} />
+        <FaCode size={40} className={`${openModal && "row-span-2"} p-2 transition-all group-hover:row-span-2`} />
         <p
           className={`${openModal ? "block ml-2" : "hidden"} col-start-2 text-[12px] font-bold group-hover:ml-2 group-hover:block`}
         >
@@ -71,10 +72,7 @@ function DashboardNavbar() {
           place-content-start place-items-center items-center p-2 group-hover:grid-cols-[auto_auto] group-hover:place-items-start
           cursor-pointer`}
       >
-        <FaFreeCodeCamp
-          size={40}
-          className={`${openModal && "row-span-2"} rounded-full p-2 transition-all group-hover:row-span-2`}
-        />
+        <LuSwords size={40} className={`${openModal && "row-span-2"} p-2 transition-all group-hover:row-span-2`} />
         <p
           className={`${openModal ? "block ml-2" : "hidden"} col-start-2 text-[12px] font-bold group-hover:ml-2 group-hover:block`}
         >
@@ -90,10 +88,7 @@ function DashboardNavbar() {
           place-content-start place-items-center items-center p-2 group-hover:grid-cols-[auto_auto] group-hover:place-items-start
           cursor-pointer`}
       >
-        <MdLeaderboard
-          size={40}
-          className={`${openModal && "row-span-2"} rounded-full p-2 transition-all group-hover:row-span-2`}
-        />
+        <MdLeaderboard size={40} className={`${openModal && "row-span-2"} p-2 transition-all group-hover:row-span-2`} />
         <p
           className={`${openModal ? "block ml-2" : "hidden"} col-start-2 text-[12px] font-bold group-hover:ml-2 group-hover:block`}
         >
