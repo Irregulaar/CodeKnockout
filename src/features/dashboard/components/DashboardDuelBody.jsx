@@ -6,7 +6,7 @@ import { FaUserGroup } from "react-icons/fa6";
 
 function DashboardDuelBody() {
   return (
-    <div className="flex flex-col gap-2 w-[90%] h-fit text-white">
+    <div className="flex flex-col gap-2 w-[90%] h-fit text-white mb-10">
       <span className="text-[30px] font-semibold">Duels</span>
 
       <div className="flex flex-row flex-wrap md:flex-nowrap gap-2 w-full h-fit">
@@ -129,8 +129,8 @@ function DashboardDuelBody() {
         <div className="flex flex-row gap-2 w-full h-fit items-center">
           <input type="text" className="bg-dark text-white rounded w-full outline-none p-1" placeholder="Search room" />
         </div>
-        <div className="flex flex-row gap-2 w-full h-fit">
-          <div className="bg-dark w-60 h-fit rounded p-2 flex flex-col gap-2">
+        <div className="flex flex-row flex-wrap gap-2 w-full h-fit">
+          <div className="bg-dark w-full md:w-60 h-fit rounded p-2 flex flex-col gap-2">
             <div className="flex flex-row gap-2 items-center justify-between">
               <span>Room name</span>
               <div className="flex flex-row gap-2 items-center">
@@ -153,7 +153,7 @@ function DashboardDuelBody() {
               </button>
             </div>
           </div>
-          <div className="bg-dark w-60 h-fit rounded p-2 flex flex-col gap-2">
+          <div className="bg-dark w-full md:w-60 h-fit rounded p-2 flex flex-col gap-2">
             <div className="flex flex-row gap-2 items-center justify-between">
               <span>Room name</span>
               <div className="flex flex-row gap-2 items-center">

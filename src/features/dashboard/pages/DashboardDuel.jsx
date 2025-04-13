@@ -8,7 +8,9 @@ function DashboardDuel() {
       <DashboardNavbar />
       <div className="flex flex-col relative h-full w-full ml-20 md:ml-50">
         <DashboardHeader />
-        <DashboardDuelBody />
+        <div className="flex flex-col">
+          <DashboardDuelBody />
+        </div>
       </div>
     </div>
   );
