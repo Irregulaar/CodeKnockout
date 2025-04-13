@@ -127,7 +127,7 @@ function DashboardDuelBody() {
 
       <div className="flex flex-col gap-2">
         <div className="flex flex-row gap-2 w-full h-fit items-center">
-          <input type="text" className="bg-dark text-white rounded w-full outline-none p-1" placeholder="Search room" />
+          <input type="text" className="bg-dark text-white rounded w-full outline-none p-2" placeholder="Search room" />
         </div>
         <div className="flex flex-row flex-wrap gap-2 w-full h-fit">
           <div className="bg-dark w-full md:w-60 h-fit rounded p-2 flex flex-col gap-2">
