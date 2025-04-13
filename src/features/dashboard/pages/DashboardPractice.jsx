@@ -8,7 +8,9 @@ function DashboardPractice() {
       <DashboardNavbar />
       <div className="flex flex-col relative h-full w-full ml-50">
         <DashboardHeader />
-        <DashboardPracticeBody />
+        <div className="w-full h-fit flex flex-col">
+          <DashboardPracticeBody />
+        </div>
       </div>
     </div>
   );
